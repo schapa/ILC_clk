@@ -28,4 +28,8 @@ export SRC := \
 	./sdk/src/stm32f0-stdperiph/stm32f0xx_adc.c \
 	./sdk/src/stm32f0-stdperiph/stm32f0xx_iwdg.c \
 	./sdk/src/stm32f0-stdperiph/stm32f0xx_misc.c \
+	./sdk/src/stm32f0-stdperiph/stm32f0xx_tim.c \
+	./sdk/src/stm32f0-stdperiph/stm32f0xx_syscfg.c \
+	./sdk/src/stm32f0-stdperiph/stm32f0xx_exti.c \
+	
 

@@ -21,16 +21,12 @@ extern "C" {
  * @param[in] data     data for event. This must be static or allocated and must NOT be a pointer to stack data
  * @param[in] dispose  dispose method. Could be Null
  *
- * \note uses Ql_OS_SendMessage if there is no messages in queue.
- * This allow task to get out of pending
  */
 void EventQueue_Push(EventTypes_e type, void *data, onEvtDispose_f dispose);
 
 /**
  * @brief Pend event on Queue
  * @param[out] pointer to event
- *
- * \note uses Ql_OS_GetMessage when queue is empty, so could lock
  */
 void EventQueue_Pend(Event_t *event);
 

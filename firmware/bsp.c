@@ -34,6 +34,7 @@ _Bool BSP_Init(void) {
 	initialize_RCC();
 	initWdt();
 	BSP_InitGpio();
+	System_init(NULL);
 	System_setStatus(INFORM_IDLE);
 
 	initADC();

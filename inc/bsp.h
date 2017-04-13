@@ -24,8 +24,8 @@ typedef enum {
 
 	BSP_Pin_74HC595_DS,
 	BSP_Pin_74HC595_NOE,
-	BSP_Pin_74HC595_ST,
-	BSP_Pin_74HC595_SH,
+	BSP_Pin_74HC595_Store,
+	BSP_Pin_74HC595_Shift,
 
 	BSP_Pin_KEY_1,
 	BSP_Pin_KEY_2,
@@ -37,6 +37,19 @@ typedef enum {
 
 	BSP_Pin_Last,
 } BSP_Pin_t;
+
+typedef enum {
+	BUTTON_UP, // BSP_Pin_Key_1
+	BUTTON_DOWN, // BSP_Pin_Key_4
+	BUTTON_LAST
+} Buttons_t;
+
+typedef enum {
+	ACTION_PRESS  = 0x10,
+	ACTION_REPEAT = 0x20,
+	ACTION_RELESE = 0x40,
+	ACTION_LAST
+} Action_t;
 
 
 _Bool BSP_Init(void);
