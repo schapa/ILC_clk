@@ -25,7 +25,7 @@ static void onScanTimer(uint32_t id, void *data);
 static void onBlinkTimer(uint32_t id, void *data);
 
 void Clock_init(void) {
-	s_display.scanTimerId = Timer_newArmed(10, true, onScanTimer, NULL);
+	s_display.scanTimerId = Timer_newArmed(BSP_TICKS_PER_SECOND/100, true, onScanTimer, NULL);
 	s_display.blinkTimerId = Timer_newArmed(BSP_TICKS_PER_SECOND/2, true, onBlinkTimer, NULL);
 }
 
@@ -69,20 +69,13 @@ static void onBlinkTimer(uint32_t id, void *data) {
 }
 
 #include "stm32f0xx.h"
-static void dummyLoop(const size_t &val) {
-	for (size_t i = 0; i < val; i++);
-		__NOP();
-}
 
 static void writeShiftReg(const uint8_t &val) {
 	for (size_t i = 0; i < 8; i++) {
 		BSP_SetPinVal(BSP_Pin_74HC595_DS, val & (0x80>>i));
 		BSP_SetPinVal(BSP_Pin_74HC595_Shift, false);
-		dummyLoop(0xFF);
 		BSP_SetPinVal(BSP_Pin_74HC595_Shift, true);
-		dummyLoop(0xFF);
 	}
 	BSP_SetPinVal(BSP_Pin_74HC595_Store, true);
-	dummyLoop(0xFF);
 	BSP_SetPinVal(BSP_Pin_74HC595_Store, false);
 }

@@ -15,6 +15,7 @@
 #include "stm32f0xx_gpio.h"
 #include "stm32f0xx_adc.h"
 #include "stm32f0xx_iwdg.h"
+#include "stm32f0xx_dbgmcu.h"
 
 #include <stddef.h>
 
@@ -36,7 +37,7 @@ _Bool BSP_Init(void) {
 	BSP_InitGpio();
 	System_init(NULL);
 	System_setStatus(INFORM_IDLE);
-
+if(0)
 	initADC();
 
 	return true;
@@ -69,6 +70,7 @@ static void initWdt(void) {
 	IWDG_SetReload(0x0FFF);
 	IWDG_ReloadCounter();
 	IWDG_Enable();
+	DBGMCU_APB1PeriphConfig(DBGMCU_IWDG_STOP, ENABLE);
 }
 
 static void initADC(void) {

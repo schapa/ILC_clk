@@ -32,7 +32,7 @@ CFLAGS += \
 	-I./firmware/ \
 
 CFLAGS += \
-	-Og \
+	-Os \
 	-ggdb \
 	-mcpu=cortex-m0 \
 	-mthumb -mabi=aapcs \
