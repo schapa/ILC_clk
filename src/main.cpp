@@ -43,6 +43,13 @@ static void* state_On(const Event_t &event) {
 	state_f state = state_On;
 	uint32_t intVal = (uint32_t)event.data;
 	switch (event.type) {
+		case EVENT_SYSTICK: {
+				uint8_t h = 0;
+				uint8_t m = 0;
+				Clock_rtcGetTime(h, m);
+				Clock_setTime(h, m);
+			}
+			break;
 		case EVENT_ADC:
 			if (intVal < 36000) {
 				state = state_Off;

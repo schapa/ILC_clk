@@ -32,5 +32,7 @@ export SRC := \
 	./sdk/src/stm32f0-stdperiph/stm32f0xx_syscfg.c \
 	./sdk/src/stm32f0-stdperiph/stm32f0xx_exti.c \
 	./sdk/src/stm32f0-stdperiph/stm32f0xx_dbgmcu.c \
+	./sdk/src/stm32f0-stdperiph/stm32f0xx_pwr.c \
+	./sdk/src/stm32f0-stdperiph/stm32f0xx_rtc.c \
 	
 
