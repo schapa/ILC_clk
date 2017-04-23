@@ -19,7 +19,8 @@
 #include "Queue.h"
 
 #define KEY_DEBOUNCE_TOUT 50
-#define KEY_REPEAT_TOUT 100
+#define KEY_FIRST_REPEAT_TOUT 500
+#define KEY_REPEAT_TOUT 10
 
 void EXTI4_15_IRQHandler(void);
 
@@ -38,14 +39,14 @@ static void onRepeatTimer(uint32_t id, void *data);
 
 void EXTI4_15_IRQHandler(void) {
 	if (EXTI_GetFlagStatus(EXTI_Line5)) {
-		_Bool state = !BSP_GetPinVal(BSP_Pin_KEY_UP);
+		_Bool state = !BSP_GetPinVal(BSP_Pin_KEY_DOWN);
 		onButtonIsr(BUTTON_UP, state);
 		EXTI_ClearFlag(EXTI_Line5);
 	}
 	if (EXTI_GetFlagStatus(EXTI_Line9)) {
-		_Bool state = !BSP_GetPinVal(BSP_Pin_KEY_DOWN);
+		_Bool state = !BSP_GetPinVal(BSP_Pin_KEY_UP);
 		onButtonIsr(BUTTON_DOWN, state);
-		EXTI_ClearFlag(EXTI_Line6);
+		EXTI_ClearFlag(EXTI_Line9);
 	}
 }
 
@@ -75,13 +76,14 @@ static void onDebounceTimer(uint32_t id, void *data) {
 		EventQueue_Push(EVENT_KEY, (void*)val, NULL);
 		s_buttons[button].timerId = INVALID_HANDLE;
 		if (s_buttons[button].isRepeatable) {
-			s_buttons[button].timerId = Timer_newArmed(KEY_REPEAT_TOUT, true, onRepeatTimer, (void*)button);
+			s_buttons[button].timerId = Timer_newArmed(KEY_FIRST_REPEAT_TOUT, true, onRepeatTimer, (void*)button);
 		}
 	}
 }
 
 static void onRepeatTimer(uint32_t id, void *data) {
 	Buttons_t button = (Buttons_t)data;
+	Timer_rearmTimeout(id, KEY_REPEAT_TOUT);
 	if ((button < BUTTON_LAST) && (s_buttons[button].timerId == id)) {
 		uint32_t val = ACTION_REPEAT | button;
 		EventQueue_Push(EVENT_KEY, (void*)val, NULL);

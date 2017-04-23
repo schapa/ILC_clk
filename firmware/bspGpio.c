@@ -72,5 +72,13 @@ static void initGPIO_NVIC(void) {
 			ENABLE
 	};
 	NVIC_Init(&nvic);
+
+	EXTI_InitTypeDef exti = {
+			EXTI_Line5 | EXTI_Line9,
+			EXTI_Mode_Interrupt,
+			EXTI_Trigger_Rising_Falling,
+			ENABLE
+	};
+	EXTI_Init(&exti);
 }
 

@@ -37,7 +37,6 @@ _Bool BSP_Init(void) {
 	BSP_InitGpio();
 	System_init(NULL);
 	System_setStatus(INFORM_IDLE);
-if(0)
 	initADC();
 
 	return true;
@@ -57,6 +56,7 @@ static void initialize_RCC(void) {
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOF, ENABLE);
 
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
 
 	GPIO_DeInit(GPIOA);
@@ -65,12 +65,12 @@ static void initialize_RCC(void) {
 }
 
 static void initWdt(void) {
-//	IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);
-//	IWDG_SetPrescaler(IWDG_Prescaler_32);
-//	IWDG_SetReload(0x0FFF);
-//	IWDG_ReloadCounter();
-//	IWDG_Enable();
-//	DBGMCU_APB1PeriphConfig(DBGMCU_IWDG_STOP, ENABLE);
+	IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);
+	IWDG_SetPrescaler(IWDG_Prescaler_32);
+	IWDG_SetReload(0x0FFF);
+	IWDG_ReloadCounter();
+	IWDG_Enable();
+	DBGMCU_APB1PeriphConfig(DBGMCU_IWDG_STOP, ENABLE);
 }
 
 static void initADC(void) {
@@ -82,11 +82,12 @@ static void initADC(void) {
 		ADC_DataAlign_Right,
 		ADC_ScanDirection_Upward
 	};
+	s_adcTimerId = Timer_new(ADC_TIMEOUT, true, onAdcTimeout, NULL);
 
 	ADC_DeInit(ADC1);
 	ADC_Init(ADC1, (ADC_InitTypeDef*)&iface);
 	ADC_ClockModeConfig(ADC1, ADC_ClockMode_SynClkDiv4);
-	ADC_ChannelConfig(ADC1, ADC_Channel_7, ADC_SampleTime_239_5Cycles);
+	ADC_ChannelConfig(ADC1, ADC_Channel_0, ADC_SampleTime_239_5Cycles);
 
 	initADC_NVIC();
 	ADC_ContinuousModeCmd(ADC1, DISABLE);
@@ -98,7 +99,6 @@ static void initADC(void) {
 	ADC_GetCalibrationFactor(ADC1);
 	ADC_Cmd(ADC1, ENABLE);
 
-	s_adcTimerId = Timer_newArmed(ADC_TIMEOUT, true, onAdcTimeout, NULL);
 }
 
 static void initADC_NVIC(void) {
@@ -112,7 +112,7 @@ static void initADC_NVIC(void) {
 
 static void onAdcTimeout(uint32_t id, void *data) {
 	Timer_disarm(id);
-	ADC_ChannelConfig(ADC1, ADC_Channel_7, ADC_SampleTime_239_5Cycles);
+	ADC_ChannelConfig(ADC1, ADC_Channel_0, ADC_SampleTime_239_5Cycles);
 	ADC_StartOfConversion(ADC1);
 }
 
@@ -125,8 +125,9 @@ void ADC1_IRQHandler(void) {
 		Timer_rearm(s_adcTimerId);
 
 	}
-	if (ADC_GetITStatus(ADC1, ADC_IT_AWD)) {
-		ADC_ClearITPendingBit(ADC1, ADC_IT_AWD);
+	if (ADC_GetITStatus(ADC1, ADC_IT_ADRDY)) {
+		ADC_ClearITPendingBit(ADC1, ADC_IT_ADRDY);
+		Timer_rearm(s_adcTimerId);
 	}
 }
 

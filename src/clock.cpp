@@ -60,8 +60,6 @@ static void onBlinkTimer(uint32_t id, void *data) {
 	s_display.values[2] = !s_display.values[2];
 }
 
-#include "stm32f0xx.h"
-
 static void writeShiftReg(const uint16_t &val) {
 	for (size_t i = 0; i < 16; i++) {
 		BSP_SetPinVal(BSP_Pin_74HC595_DS, val & (0x8000>>i));
