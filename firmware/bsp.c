@@ -65,12 +65,12 @@ static void initialize_RCC(void) {
 }
 
 static void initWdt(void) {
-	IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);
-	IWDG_SetPrescaler(IWDG_Prescaler_32);
-	IWDG_SetReload(0x0FFF);
-	IWDG_ReloadCounter();
-	IWDG_Enable();
-	DBGMCU_APB1PeriphConfig(DBGMCU_IWDG_STOP, ENABLE);
+//	IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);
+//	IWDG_SetPrescaler(IWDG_Prescaler_32);
+//	IWDG_SetReload(0x0FFF);
+//	IWDG_ReloadCounter();
+//	IWDG_Enable();
+//	DBGMCU_APB1PeriphConfig(DBGMCU_IWDG_STOP, ENABLE);
 }
 
 static void initADC(void) {

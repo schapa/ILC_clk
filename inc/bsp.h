@@ -18,22 +18,15 @@ extern "C" {
 #define MINUTE_TICKS (BSP_TICKS_PER_SECOND*60)
 
 typedef enum {
-	BSP_Pin_VFD_F,
-	BSP_Pin_VFD_B,
-	BSP_Pin_VFD_A,
+	BSP_Pin_VBAT,
+	BSP_Pin_KEY_DOWN,
+	BSP_Pin_KEY_UP,
 
 	BSP_Pin_74HC595_DS,
 	BSP_Pin_74HC595_NOE,
-	BSP_Pin_74HC595_Store,
 	BSP_Pin_74HC595_Shift,
 
-	BSP_Pin_KEY_1,
-	BSP_Pin_KEY_2,
-
-	BSP_Pin_VBAT,
-
 	BSP_Pin_POWER_SWITCH,
-	BSP_Pin_VFD_G4,
 
 	BSP_Pin_Last,
 } BSP_Pin_t;

@@ -17,33 +17,22 @@ typedef struct {
 } BspGpioConfig_t;
 
 static const BspGpioConfig_t s_gpioConfig[] = {
-	[BSP_Pin_VFD_F] = { GPIOF, { GPIO_Pin_0, GPIO_Mode_OUT,
-			GPIO_Speed_Level_1, GPIO_OType_PP,  GPIO_PuPd_NOPULL} },
-	[BSP_Pin_VFD_B] = { GPIOF, { GPIO_Pin_1, GPIO_Mode_OUT,
-			GPIO_Speed_Level_1, GPIO_OType_PP,  GPIO_PuPd_NOPULL} },
-	[BSP_Pin_VFD_A] = { GPIOA, { GPIO_Pin_0, GPIO_Mode_OUT,
+	[BSP_Pin_VBAT] = { GPIOA, { GPIO_Pin_0, GPIO_Mode_AN,
 			GPIO_Speed_Level_1, GPIO_OType_PP,  GPIO_PuPd_NOPULL} },
 
-	[BSP_Pin_74HC595_DS] = { GPIOA, { GPIO_Pin_1, GPIO_Mode_OUT,
-			GPIO_Speed_Level_3, GPIO_OType_PP,  GPIO_PuPd_NOPULL} },
-	[BSP_Pin_74HC595_NOE] = { GPIOA, { GPIO_Pin_2, GPIO_Mode_OUT,
-			GPIO_Speed_Level_3, GPIO_OType_PP,  GPIO_PuPd_NOPULL} },
-	[BSP_Pin_74HC595_Store] = { GPIOA, { GPIO_Pin_3, GPIO_Mode_OUT,
-			GPIO_Speed_Level_3, GPIO_OType_PP,  GPIO_PuPd_NOPULL} },
-	[BSP_Pin_74HC595_Shift] = { GPIOA, { GPIO_Pin_4, GPIO_Mode_OUT,
-			GPIO_Speed_Level_3, GPIO_OType_PP,  GPIO_PuPd_NOPULL} },
-
-	[BSP_Pin_KEY_1] = { GPIOA, { GPIO_Pin_5, GPIO_Mode_IN,
+	[BSP_Pin_KEY_DOWN] = { GPIOA, { GPIO_Pin_5, GPIO_Mode_IN,
 			GPIO_Speed_Level_1, GPIO_OType_PP,  GPIO_PuPd_UP} },
-	[BSP_Pin_KEY_2] = { GPIOA, { GPIO_Pin_6, GPIO_Mode_IN,
+	[BSP_Pin_KEY_UP] = { GPIOA, { GPIO_Pin_9, GPIO_Mode_IN,
 			GPIO_Speed_Level_1, GPIO_OType_PP,  GPIO_PuPd_UP} },
 
-	[BSP_Pin_VBAT] = { GPIOA, { GPIO_Pin_7, GPIO_Mode_AN,
-			GPIO_Speed_Level_1, GPIO_OType_PP,  GPIO_PuPd_NOPULL} },
+	[BSP_Pin_74HC595_DS] = { GPIOA, { GPIO_Pin_6, GPIO_Mode_OUT,
+			GPIO_Speed_Level_3, GPIO_OType_PP,  GPIO_PuPd_NOPULL} },
+	[BSP_Pin_74HC595_NOE] = { GPIOA, { GPIO_Pin_7, GPIO_Mode_OUT,
+			GPIO_Speed_Level_3, GPIO_OType_PP,  GPIO_PuPd_NOPULL} },
+	[BSP_Pin_74HC595_Shift] = { GPIOB, { GPIO_Pin_1, GPIO_Mode_OUT,
+			GPIO_Speed_Level_3, GPIO_OType_PP,  GPIO_PuPd_NOPULL} },
 
-	[BSP_Pin_POWER_SWITCH] = { GPIOA, { GPIO_Pin_9, GPIO_Mode_OUT,
-			GPIO_Speed_Level_1, GPIO_OType_PP,  GPIO_PuPd_NOPULL} },
-	[BSP_Pin_VFD_G4] = { GPIOA, { GPIO_Pin_10, GPIO_Mode_OUT,
+	[BSP_Pin_POWER_SWITCH] = { GPIOF, { GPIO_Pin_0, GPIO_Mode_OUT,
 			GPIO_Speed_Level_1, GPIO_OType_PP,  GPIO_PuPd_NOPULL} },
 };
 
@@ -55,7 +44,7 @@ void BSP_InitGpio(void) {
 		GPIO_Init((GPIO_TypeDef*)s_gpioConfig[i].port, (GPIO_InitTypeDef*)&s_gpioConfig[i].setting);
 
 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA, EXTI_PinSource5);
-	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA, EXTI_PinSource6);
+	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA, EXTI_PinSource9);
 
 	initGPIO_NVIC();
 

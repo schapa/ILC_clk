@@ -5,6 +5,7 @@
 #include "bsp.h"
 #include "Queue.h"
 #include "timers.h"
+#include "systemTimer.h"
 #include "clock.h"
 
 
@@ -20,7 +21,7 @@ int main(int argc, char* argv[]) {
 	Timer_init(onTimerPush);
 	BSP_Init();
 	Clock_init();
-	Clock_setTime(12,34);
+	Clock_setTime(12, 34);
 	state_f state = state_On;
 	BSP_SetPinVal(BSP_Pin_POWER_SWITCH, true);
 	while (true) {
@@ -48,7 +49,7 @@ static void* state_On(const Event_t &event) {
 				uint8_t h = 0;
 				uint8_t m = 0;
 				Clock_rtcGetTime(h, m);
-				Clock_setTime(h, m);
+				Clock_setTime(m, System_getUptime());
 			}
 			break;
 		case EVENT_ADC:

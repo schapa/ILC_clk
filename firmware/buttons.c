@@ -38,12 +38,12 @@ static void onRepeatTimer(uint32_t id, void *data);
 
 void EXTI4_15_IRQHandler(void) {
 	if (EXTI_GetFlagStatus(EXTI_Line5)) {
-		_Bool state = !BSP_GetPinVal(BSP_Pin_KEY_1);
+		_Bool state = !BSP_GetPinVal(BSP_Pin_KEY_UP);
 		onButtonIsr(BUTTON_UP, state);
 		EXTI_ClearFlag(EXTI_Line5);
 	}
-	if (EXTI_GetFlagStatus(EXTI_Line6)) {
-		_Bool state = !BSP_GetPinVal(BSP_Pin_KEY_2);
+	if (EXTI_GetFlagStatus(EXTI_Line9)) {
+		_Bool state = !BSP_GetPinVal(BSP_Pin_KEY_DOWN);
 		onButtonIsr(BUTTON_DOWN, state);
 		EXTI_ClearFlag(EXTI_Line6);
 	}
