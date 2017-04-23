@@ -26,7 +26,7 @@ static void onBlinkTimer(uint32_t id, void *data);
 
 void Clock_init(void) {
 	Clock_rtcInit();
-	s_display.scanTimerId = Timer_newArmed(BSP_TICKS_PER_SECOND/100, true, onScanTimer, NULL);
+	s_display.scanTimerId = Timer_newArmed(BSP_TICKS_PER_SECOND/300, true, onScanTimer, NULL);
 	s_display.blinkTimerId = Timer_newArmed(BSP_TICKS_PER_SECOND/2, true, onBlinkTimer, NULL);
 }
 

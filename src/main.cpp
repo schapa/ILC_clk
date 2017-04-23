@@ -22,6 +22,7 @@ int main(int argc, char* argv[]) {
 	Clock_init();
 	Clock_setTime(12,34);
 	state_f state = state_On;
+	BSP_SetPinVal(BSP_Pin_POWER_SWITCH, true);
 	while (true) {
 		Event_t event;
 		EventQueue_Pend(&event);
